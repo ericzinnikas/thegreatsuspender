@@ -286,7 +286,7 @@ var tgs = (function () {
     }
 
     function isSuspended(tab) {
-        return tab.url.indexOf('suspended.html') >= 0;
+      return url.indexOf('chrome-extension:') === 0 && url.indexOf('suspended.html') >= 0;
     }
 
     function unsuspendAllTabs() {
@@ -383,7 +383,13 @@ var tgs = (function () {
         views = chrome.extension.getViews({type: 'tab', "windowId": tab.windowId});
         result = views.some(function (view) {
             if (view.tabId === tab.id) {
-                view.location.replace(url);
+              if (/^https?:/i.test(url)) {
+                  view.location.replace(url);
+                } else {
+                  // Just in case: don't drop it on the floor
+                  view.location.replace('data:text/plain,'+
+                                        encodeURIComponent('Unsupported:\n'+url));
+                }
                 return true;
             }
         });
@@ -1158,4 +1164,3 @@ var tgs = (function () {
 }());
 
 tgs.runStartupChecks();
-
