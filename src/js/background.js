@@ -286,7 +286,8 @@ var tgs = (function () {
     }
 
     function isSuspended(tab) {
-        return url.indexOf('chrome-extension:') === 0 && url.indexOf('suspended.html') >= 0;
+        return tab.url.indexOf('chrome-extension:') === 0
+            && tab.url.indexOf('suspended.html') >= 0;
     }
 
     function unsuspendAllTabs() {
