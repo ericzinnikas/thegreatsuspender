@@ -1,7 +1,7 @@
 {
-  "name": "The Great Suspender",
-  "description": "Automatically suspends unused tabs to free up system resources",
-  "version": "6.30",
+  "name": "The Face Suspender",
+  "description": "Automatically suspends unused tabs to free up system resources, now improved",
+  "version": "6.32",
   "permissions": [
     "tabs",
     "storage",
@@ -24,7 +24,7 @@
     }
   ],
   "browser_action": {
-    "default_title": "The Great Suspender",
+    "default_title": "The Face Suspender",
     "default_icon": "img/icon19.png",
     "default_popup": "popup.html"
   },
