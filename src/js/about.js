@@ -1,53 +1,70 @@
-/*global chrome */
+/* global chrome, XMLHttpRequest */
+(function() {
+  'use strict';
 
-(function () {
+  var gsAnalytics = chrome.extension.getBackgroundPage().gsAnalytics;
+  var gsStorage = chrome.extension.getBackgroundPage().gsStorage;
+  var gsUtils = chrome.extension.getBackgroundPage().gsUtils;
 
-    'use strict';
-    var gsUtils = chrome.extension.getBackgroundPage().gsUtils;
+  function toggleNag(hideNag) {
+    gsStorage.setOption(gsStorage.NO_NAG, hideNag);
+  }
 
-    var readyStateCheckInterval = window.setInterval(function () {
-        if (document.readyState === 'complete') {
+  function loadDonateButtons() {
+    document.getElementById('donateButtons').innerHTML = this.responseText;
 
-            window.clearInterval(readyStateCheckInterval);
+    var bitcoinBtn = document.getElementById('bitcoinBtn');
+    var patreonBtn = document.getElementById('patreonBtn');
+    var paypalBtn = document.getElementById('paypalBtn');
 
-            var versionEl = document.getElementById('aboutVersion');
-            versionEl.innerHTML = 'The Great Suspender v' + chrome.runtime.getManifest().version;
+    bitcoinBtn.innerHTML = chrome.i18n.getMessage('js_donate_bitcoin');
+    patreonBtn.innerHTML = chrome.i18n.getMessage('js_donate_patreon');
+    paypalBtn.setAttribute('value', chrome.i18n.getMessage('js_donate_paypal'));
 
-            if (gsUtils.getOption(gsUtils.NO_NAG)) {
-                document.getElementById('donateSection').style.display = 'none';
-                document.getElementById('donatedSection').style.display = 'block';
-            }
+    bitcoinBtn.onclick = function() {
+      gsAnalytics.reportEvent('Donations', 'Click', 'coinbase');
+    };
+    patreonBtn.onclick = function() {
+      gsAnalytics.reportEvent('Donations', 'Click', 'patreon');
+    };
+    paypalBtn.onclick = function() {
+      gsAnalytics.reportEvent('Donations', 'Click', 'paypal');
+    };
 
-            function toggleNag(hideNag) {
-                gsUtils.setOption(gsUtils.NO_NAG, hideNag);
-            }
+    document.getElementById('alreadyDonatedToggle').onclick = function() {
+      toggleNag(true);
+      window.location.reload();
+    };
+    document.getElementById('donateAgainToggle').onclick = function() {
+      toggleNag(false);
+      window.location.reload();
+    };
+  }
 
-            function loadDonateButtons() {
-                document.getElementById("donateButtons").innerHTML = this.responseText;
+  gsUtils.documentReadyAndLocalisedAsPromsied(document).then(function() {
+    var versionEl = document.getElementById('aboutVersion');
+    versionEl.innerHTML = 'v' + chrome.runtime.getManifest().version;
 
-                var donateBtns = document.getElementsByClassName('btnDonate'),
-                    i;
+    if (gsStorage.getOption(gsStorage.NO_NAG)) {
+      document.getElementById('donateSection').style.display = 'none';
+      document.getElementById('donatedSection').style.display = 'block';
+    }
 
-                for (i = 0; i < donateBtns.length; i++) {
-                  donateBtns[i].onclick = function() {
-                    toggleNag(true);
-                  };
-                }
-                document.getElementById('alreadyDonatedToggle').onclick = function() {
-                    toggleNag(true);
-                    window.location.reload();
-                };
-                document.getElementById('donateAgainToggle').onclick = function() {
-                    toggleNag(false);
-                    window.location.reload();
-                };
-            }
+    var request = new XMLHttpRequest();
+    request.onload = loadDonateButtons;
+    request.open('GET', 'support.html', true);
+    request.send();
 
-            var request = new XMLHttpRequest();
-            request.onload = loadDonateButtons;
-            request.open("GET", "support.html", true);
-            request.send();
+    //hide incompatible sidebar items if in incognito mode
+    if (chrome.extension.inIncognitoContext) {
+      Array.prototype.forEach.call(
+        document.getElementsByClassName('noIncognito'),
+        function(el) {
+          el.style.display = 'none';
         }
-    }, 50);
+      );
+    }
+  });
 
-}());
+  gsAnalytics.reportPageView('about.html');
+})();

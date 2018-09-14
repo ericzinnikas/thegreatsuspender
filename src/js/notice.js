@@ -1,26 +1,27 @@
 /*global chrome */
+(function() {
+  'use strict';
 
-(function () {
+  var tgs = chrome.extension.getBackgroundPage().tgs;
+  var gsAnalytics = chrome.extension.getBackgroundPage().gsAnalytics;
+  var gsStorage = chrome.extension.getBackgroundPage().gsStorage;
+  var gsUtils = chrome.extension.getBackgroundPage().gsUtils;
 
-    'use strict';
-    var tgs = chrome.extension.getBackgroundPage().tgs;
+  gsUtils.documentReadyAndLocalisedAsPromsied(document).then(function() {
+    var notice = tgs.requestNotice();
+    if (
+      notice &&
+      notice.hasOwnProperty('text') &&
+      notice.hasOwnProperty('version')
+    ) {
+      var noticeContentEl = document.getElementById('gsNotice');
+      noticeContentEl.innerHTML = notice.text;
+      //update local notice version
+      gsStorage.setNoticeVersion(notice.version);
+    }
 
-    var readyStateCheckInterval = window.setInterval(function () {
-        if (document.readyState === 'complete') {
-
-            window.clearInterval(readyStateCheckInterval);
-
-            var noticeTextEl = document.getElementById('noticeText'),
-                noticeTitleEl = document.getElementById('noticeTitle'),
-                noticeObj = tgs.requestNotice();
-
-            if (noticeObj.title) {
-                noticeTitleEl.innerHTML = noticeObj.title;
-            }
-            if (noticeObj.text) {
-                noticeTextEl.innerHTML = noticeObj.text;
-            }
-        }
-    }, 50);
-
-}());
+    //clear notice (to prevent it showing again)
+    tgs.clearNotice();
+  });
+  gsAnalytics.reportPageView('notice.html');
+})();

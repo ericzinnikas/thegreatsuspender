@@ -1,52 +1,56 @@
 <!doctype html>
 <html>
+
 <head>
-    <title id='gsTitle'>The Great Suspender - Session management</title>
-    <link type="text/css" href="css/style.css" rel="stylesheet"></link>
-    <script type="text/javascript" src="js/sessionUtils.js"></script>
-    <script type="text/javascript" src="js/history.js"></script>
+  <link type="text/css" href="css/fontello.css" rel="stylesheet">
+  <link type="text/css" href="css/style.css" rel="stylesheet"></link>
+  <script type="text/javascript" src="js/historyItems.js"></script>
+  <script type="text/javascript" src="js/historyUtils.js"></script>
+  <script type="text/javascript" src="js/history.js"></script>
+  <title id='gsTitle' data-i18n="__MSG_ext_extension_name__ - __MSG_html_history_title__"></title>
 
 </head>
+
 <body>
 
-<div class="mainContent">
+  <div class="mainContent">
 
-    <h1 class="pageHeader"><img src="img/icon64_hidden.png" class="headerIcon" />The Great Suspender</h1>
+    <div class="pageHeader">
+      <h1 data-i18n="__MSG_ext_extension_name__"></h1>
+    </div>
 
     <div class="contentNav">
-        <ul>
-            <li><a href='options.html'>General settings</a></li>
-            <li><a class="active">Session management</a></li>
-            <li><a href='shortcuts.html'>Keyboard shortcuts</a></li>
-            <li><a href='about.html'>Support</a></li>
-        </ul>
+      <ul>
+        <li>
+          <a href='options.html' data-i18n="__MSG_html_sidebar_general_settings__"></a>
+        </li>
+        <li class="noIncognito">
+          <a class="active" href="history.html" data-i18n="__MSG_html_sidebar_session_management__"></a>
+        </li>
+        <li class="noIncognito">
+          <a href='shortcuts.html' data-i18n="__MSG_html_sidebar_shortcuts__"></a>
+        </li>
+        <li>
+          <a href="about.html" data-i18n="__MSG_html_sidebar_support__"></a>
+        </li>
+      </ul>
     </div>
 
     <div class="content">
-        <h2>Current session:</h2>
-        <div id='currentLinks'></div>
+      <h2 data-i18n="__MSG_html_history_current_session__:"></h2>
+      <div id='currentSessions' class="sessionsContainer"></div>
 
-        <h2>Recent sessions:</h2>
-        <div id='recoveryLinks'></div>
+      <h2 data-i18n="__MSG_html_history_recent_sessions__:"></h2>
+      <div id='recoverySessions' class="sessionsContainer"></div>
 
-    	<h2>Saved sessions:</h2>
-    	<div id='historyLinks'></div>
+      <h2 data-i18n="__MSG_html_history_saved_sessions__:"></h2>
+      <div id='historySessions' class="sessionsContainer"></div>
 
-        <br />
-        <br />
-        <a href="#" id="clearHistory" class="btn">Clear tab history</a>
+      <a href="#" id="importSession" class="btn" data-i18n="__MSG_html_history_import_session__"></a>
+      <input type="file" id="importSessionAction" hidden />
     </div>
 
-</div>
-
-<div id="sessionNameModal" class="modal">
-    <h2>Enter a name for this session:</h2>
-    <input id="sessionNameText" type="text"></input>
-    <br />
-    <input id="sessionNameSubmit" type="button" value="OK" />
-    <input id="sessionNameCancel" type="button" value="Cancel" />
-
-</div>
-
+  </div>
 </body>
+
 </html>

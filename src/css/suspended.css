@@ -1,260 +1,291 @@
+/*
 
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../fonts/open-sans-300.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/open-sans-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: url('../fonts/open-sans-600.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: bold;
-  font-weight: 700;
-  src: url('../fonts/open-sans-700.woff2') format('woff2');
-}
+                - - /|_/|      .-------------------.
+  - _______________| @.@|     /      Styles by      )
+-- (______         >\_C/< ---/    Liam Johnston    /
+  -  -   / ______  _/____)  (   @liamjohnstonnz   /
+ -  -   / /\ \   \ \         `-------------------'
+   - (_/  \_) - \_)
 
+*/
+html,
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    background: #cfe0e4;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-size: 10px;
 }
-img {
-    padding: 0;
-    margin: 0;
+html {
+    box-sizing: border-box;
+    height: 100vh;
+}
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
 }
 body {
-    background: #cfe0e4;
-    margin: 0;
-    display: table;
+    min-height: 100%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    background: #fafafa;
+    color: #444;
+}
+@media (min-resolution: 192dpi) {
+    body {
+        font-weight: 300;
+    }
+}
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+p {
+    margin: 0 0 15px;
+}
+a {
+    color: #3477db;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    text-decoration: underline;
+}
+a.active {
+    cursor: default;
+    color: #444;
+    pointer-events: none;
+}
+body.suspended-page:not(.img-preview-mode) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     position: absolute;
     height: 100%;
     width: 100%;
-    overflow-x:hidden;
-    overflow-y:hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
-a {
-    color: #3889AB;
-    text-decoration: none;
-    font-weight: 400;
+.watermark {
+    display: none; /* show only if not image preview mode */
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-weight: bold;
+    color: #b6b6b6;
+    cursor: pointer;
 }
-.btnDonate {
-  font-family: 'Open Sans', sans-serif;
-  margin: 0 5px;
-  float: left;
+.suspended-page:not(.img-preview-mode) .watermark {
+    display: block;
 }
-.btn {
-  background: #52a6c8;
-  color: #fff;
-  border-radius: 3px;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px;
-  display: inline-block;
-  border: 0;
-  font-size: 14px;
-  cursor: pointer;
-}
-#gsTopBar  {
-   	position: absolute;
-    background: #efefef;
+.gsTopBar {
+    position: fixed;
+    background: #fafafa;
     top: 0;
-    padding: 15px 0;
-    line-height: 30px;
+    padding: 30px 40px 20px;
     width: 100%;
-    max-width: 100%;
     text-align: center;
-    color: #444;
-    border-bottom: 1px solid #AAA;
-    box-shadow: 0 0 4px -2px rgba(0, 0, 0, 0.5);
+    z-index: 101;
 }
-#gsTopBarImg {
+.faviconWrap {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-bottom: -1px;
+    margin-right: 10px;
+}
+.dark .faviconWrapLowContrast {
+    filter: invert(1) grayscale(1);
+}
+.gsTopBarImg {
     height: 16px;
     width: 16px;
 }
-#gsTitleWrap {
-    width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.gsTopBarTitle {
+    color: #444;
+    font-size: 20px;
+    cursor: default;
 }
-#gsTopBarTitle {
-    font-size: 19px;
-    line-height: 26px;
-    color: rgb(68, 68, 68);
-    font-weight: 300;
+.gsTopBarUrl {
+    color: #444;
     cursor: pointer;
 }
-#gsTopBarTitle:hover {
-    text-decoration: underline;
-}
-#gsWhitelistLink {
-    text-decoration: underline;
-    cursor: pointer;
-}
-#gsLinkedUrl {
-    text-decoration: underline;
-    cursor: pointer;
-    display: none;
-    width: 80%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-}
-#gsPreview {
-    width: 100%;
-    height: 100%;
-    background: #fff;
-}
-#gsPreviewImg {
-    display: block
+.gsTopBarUrl,
+.gsTopBarTitleWrap {
     max-width: 100%;
-    margin: 86px auto 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin-bottom: 8px;
 }
-.centerBoxContainer {
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
+.hideOverflow {
+    overflow: hidden;
 }
-.centerBox {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
+.gsPreview {
+    width: 90%;
+    margin: 30px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    transition: all 0.2s ease;
 }
-#suspendedMsg {
-    width: 100%;
-    height: 100%;
+.gsPreview:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-#suspendedMsg, #gsPreview {
+.dark .gsPreview {
+    filter: brightness(70%);
+    opacity: 0.7;
+}
+.dark .gsPreview:hover {
+    opacity: 1;
+}
+.gsPreviewImg {
+    display: block;
+    max-width: 100%;
+    margin: 0;
+}
+body.img-preview-mode .gsTopBar {
+    position: relative;
+}
+.suspended-page {
     cursor: pointer;
 }
-#suspendedMsg h1, #suspendedMsg h2 {
-    font-size: 60px;
-    color: #134960;
-    margin: 30px 0 0;
-    font-weight: 600;
+.suspendedMsg {
+    width: 100vw;
+    height: 100vh;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
-#suspendedMsg h2 {
-    font-size: 50px;
+.suspendedMsg img {
+    height: 180px;
+    margin-bottom: 30px;
 }
-@media all and (max-width: 600px) {
-    #suspendedMsg h1 {
-        font-size: 45px;
-    }
-    #suspendedMsg h2 {
-        font-size: 55px;
-    }
+.suspendedMsg-instr {
+    font-size: 20px;
 }
-#dudePopup {
-    position: fixed;
-    left: 30px;
-    bottom: -240px;
+.suspendedMsg-shortcut {
+    font-size: 15px;
 }
 
-@-webkit-keyframes silde_to_top {
-    0% {
-        bottom: -240px;
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
+    margin-left: -40px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #3477db;
+    animation: spinner 0.6s linear infinite;
+    z-index: 100;
+}
+#snoozySpinner.spinner:before {
+    border: 2px solid transparent;
+    border-right-color: #4a4a4a;
+    border-top-color: #4a4a4a;
+    animation: spinner 0.6s linear infinite;
+    margin: 0;
+    position: absolute;
+    top: 49px;
+    right: 7px;
+    left: auto;
+    width: 12px;
+    height: 12px;
+}
+.suspendedTextWrap {
+    height: 60px; /* stops slight jump when suspending */
+}
+.waking .suspendedTextWrap {
+    opacity: 0;
+}
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
     }
+}
+
+/* dark theme for night lurkers */
+.dark,
+.dark .gsTopBar,
+.dark .suspendedMsg {
+    background: #222;
+}
+.dark .suspendedMsg img {
+    filter: brightness(150%);
+}
+.dark .gsTopBar,
+.dark .gsTopBarTitle,
+.dark .gsTopBar a,
+.dark .suspendedMsg,
+.dark .watermark {
+    color: #b8b8b8;
+}
+.dark #setKeyboardShortcut {
+    text-decoration: underline;
+    color: #b8b8b8;
+}
+
+/* end suspended tab styles */
+
+.toast-wrapper {
+    display: none;
+    text-align: center;
+    position: fixed;
+    z-index: 9999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    animation: fadeinout 4s linear forwards;
+}
+.toast-content {
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fefefe;
+    margin: auto;
+    padding: 10px 20px 20px 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.toast-content p {
+    font-size: 16px;
+}
+
+@keyframes fadeinout {
+    0%,
     100% {
-        bottom: 10px;
-        z-index: 1000000;
+        opacity: 0;
+        visibility: hidden;
+    }
+    5%,
+    90% {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-@-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-#dudePopup.poppedup {
-    -webkit-animation-name: silde_to_top;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: ease;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-direction: normal;
-    -webkit-animation-delay: 0.5s;
-    -webkit-animation-play-state: running;
-    -webkit-animation-fill-mode: forwards;
-}
-
-#donateBubble {
-    position: relative;
-    width: 365px;
-    height: 80px;
-    padding: 5px 10px;
-    background: #E7F3F8;
-    border: #87BACE solid 1px;
-    border-radius: 4px;
-    color: #555;
-    bottom: 50px;
-    left: 133px;
-    position: fixed;
-    text-align: center;
-    font-size: 15px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-}
-
-#donateBubble:after {
-    content: "";
-    position: absolute;
-    top: 19px;
-    left: -15px;
-    border-style: solid;
-    border-width: 15px 15px 15px 0;
-    border-color: transparent #E7F3F8;
-    display: block;
-    width: 0;
-    z-index: 1;
-}
-
-#donateBubble:before {
-    content: "";
-    position: absolute;
-    top: 19px;
-    left: -16px;
-    border-style: solid;
-    border-width: 15px 15px 15px 0;
-    border-color: transparent #87BACE;
-    display: block;
-    width: 0;
-    z-index: 0;
-}
-
-#donateBubble.fadeIn {
-    -webkit-animation: fadein 0.7s;
-    animation: fadein 0.7s;
-    -webkit-animation-fill-mode:forwards;
-    -webkit-animation-delay: 1.5s;
-}
-
-
-/* dark theme for night lurkers */
-.dark #gsTopBar {
-    background: #CDCDCD;
-}
-.dark #suspendedMsg, .dark {
-    background: #134960;
-}
-.dark #suspendedMsg h1, .dark #suspendedMsg h2 {
-    color: #7AA4AE;
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

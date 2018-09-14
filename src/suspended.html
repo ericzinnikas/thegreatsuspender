@@ -1,40 +1,70 @@
 <!doctype html>
 <html>
+
 <head>
-	<title id="gsTitle">Suspended Tab</title>
-	<link id="gsFavicon" rel="icon" href="img/icon16.png" />
+	<!--should use the same as the default extension favicon-->
+	<link id="gsFavicon" rel="icon" href="img/icon128-suspendy.png" />
+	<link rel="stylesheet" type="text/css" href="css/suspended.css">
 	<script type="text/javascript" src="js/suspended.js"></script>
-	<link type="text/css" href="css/suspended.css" rel="stylesheet"></link>
+	<title id="gsTitle" data-i18n="__MSG_html_suspended_title__"></title>
 </head>
-<body>
 
-<div id="gsTopBar">
-	<div id="gsTitleWrap">
-		<img id='gsTopBarImg' /> <a id='gsTopBarTitle'></a>
-	</div>
-	<a id='gsWhitelistLink'></a>
-	<a id='gsLinkedUrl'></a>
-</div>
-<div id="suspendedMsg" class="centerBoxContainer">
-    <div class="centerBox">
-		<h1>Tab suspended</h1>
-		<h2>Click to reload</h2>
-    </div>
-</div>
+<body class="suspended-page">
 
-<script type="text/html" id="previewTemplate">
-	<div id="gsPreview">
-	    <img id='gsPreviewImg' />
-	</div>
-</script>
+	<script type="text/html" id="previewTemplate">
+		<div id="gsPreview" class="gsPreview">
+			<img id="gsPreviewImg" class="gsPreviewImg" />
+		</div>
+	</script>
 
-<script type="text/html" id="donateTemplate">
-	<img id="dudePopup" src="img/dude.png" style="float: left;">
-	<div id="donateBubble">
-		<div style="font-size: 15px; margin-bottom: 10px;">Does this extension make you happy?</div>
-	    <div id="donateButtons" />
+	<script type="text/html" id="donateTemplate">
+		<link rel="stylesheet" type="text/css" href="css/donate.css">
+		<img id="dudePopup" src="img/suspendy-guy.png">
+		<div id="donateBubble" class="donateBubble">
+			<p class="donate-text" data-i18n="__MSG_html_suspended_donation_question__"></p>
+			<div id="donateButtons" class="donateButtons" />
+		</div>
+	</script>
+
+	<script type="text/html" id="toastTemplate">
+		<div class="toast-content">
+			<h1 data-i18n="__MSG_html_suspended_toast_not_connected__"></h1>
+			<p data-i18n="__MSG_html_suspended_toast_reload_disabled__"></p>
+		</div>
+	</script>
+
+	<div id="gsTopBar" class="gsTopBar">
+		<div id="gsTopBarTitleWrap" class="hideOverflow gsTopBarTitleWrap">
+			<div id="faviconWrap" class="faviconWrap">
+				<img id="gsTopBarImg" class="gsTopBarImg" />
+			</div>
+			<span id="gsTopBarTitle" class="gsTopBarTitle"></span>
+		</div>
+		<div class="hideOverflow">
+			<a id="gsTopBarUrl" class="gsTopBarUrl"></a>
+		</div>
 	</div>
-</script>
+
+	<div id="suspendedMsg" class="suspendedMsg">
+		<div style="position: relative">
+			<img id="snoozyImg" src="img/snoozy_tab.svg" />
+			<div id="snoozySpinner"></div>
+		</div>
+		<div class="suspendedTextWrap">
+			<div class="suspendedMsg-instr">
+				<span data-i18n="__MSG_html_suspended_click_to_reload__"></span>
+			</div>
+			<div class="suspendedMsg-shortcut">
+				<span id="hotkeyCommand"></span>
+			</div>
+		</div>
+	</div>
+	<div class="watermark">
+		The Great Suspender
+	</div>
+
+	<div id="refreshSpinner"></div>
 
 </body>
+
 </html>
