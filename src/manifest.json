@@ -28,7 +28,10 @@
   ],
   "browser_action": {
     "default_title": "The Face Suspender",
-    "default_icon": "img/icon19.png",
+    "default_icon": {
+      "16": "img/ic_suspendy_16x16.png",
+      "32": "img/ic_suspendy_32x32.png"
+    },
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
